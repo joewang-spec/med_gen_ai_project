@@ -32,4 +32,23 @@ Observation: Robust coverage of the entire polyp mass.
 
 Explanation: Surprisingly, this variant outperformed even the Full U-Net on the Polyp dataset. Polyp detection is a Texture Task. The deep layers encode the "concept" of abnormal tissue. By prioritizing these deep features, the model acts like a semantic generator, filling in the mask based on tissue identity rather than just edges.
 
+📊 Part 3: Quantitative Analysis (The Performance Inversion)
+Our study revealed that the "best" architecture depends entirely on whether the biological task is Texture-Dominant or Boundary-Dominant.
+
+Case Study A: Texture-Dominant (Polyps)
+In the Kvasir-SEG dataset, the target (polyp) is defined by tissue texture, not a clear outline.
+
+<img width="743" alt="Polyp Results Table" src="https://github.com/user-attachments/assets/9802ca48-2dfc-4b31-b482-c26e314db6ea" />
+
+Deep Skips Won: They captured the "Latent Identity" of the tissue.
+
+Full U-Net Lagged: High-frequency noise from shallow skips actually confused the model, lowering semantic coherence.
+
+
+Key Insight:
+
+Spatial Precision > Semantic Depth: Nuclei segmentation is semantically simple but spatially complex (separating touching instances).
+
+Shallow Skips Dominance: The "Shallow Skips Only" variant performed within 0.3% of the Full U-Net, significantly outperforming Deep Skips. This proves that for boundary tasks, the recovery of high-frequency spatial features is the primary driver of performance.
+
 
